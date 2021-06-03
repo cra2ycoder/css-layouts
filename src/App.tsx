@@ -4,20 +4,20 @@ import { FlexBoxForm } from "./form";
 import "./styles.css";
 
 export default function App() {
-  const [wrapperStyle, setWrapperStyle] = useState({
+  const [wrapperStyle, setWrapperStyle] = useState<object>({
     alignContent: "center",
-    alignSelf: "left"
+    alignSelf: "left",
+    maxWidth: "1024px"
   });
-
-  const onSelectChange = (key: string, value: string) => {
-    console.log({ key, value });
-    wrapperStyle[key] = value;
-    setWrapperStyle({ ...wrapperStyle });
-  };
 
   return (
     <div className="App">
-      <FlexBoxForm />
+      <FlexBoxForm
+        getFieldValues={(values: object) => {
+          console.log({ values });
+          setWrapperStyle({ ...values });
+        }}
+      />
       <Wrapper
         alignSelf={wrapperStyle?.alignSelf}
         alignContent={wrapperStyle?.alignContent}

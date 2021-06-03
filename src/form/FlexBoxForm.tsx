@@ -1,64 +1,83 @@
-import {
-  Box,
-  TextField,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl
-} from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { ChangeEvent } from "react";
+import { Box } from "@material-ui/core";
+import { useFormik } from "formik";
 import "./styles.css";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2)
-    },
-    formBox: {
-      display: "flex",
-      flexWrap: "wrap",
-      alignItems: "center",
-      padding: "0 0 1rem 1rem"
-    }
-  })
-);
+interface IFieldBaseProps {
+  label: string;
+  id: string;
+  value?: string;
+  onChange?: (e: ChangeEvent<any>) => void;
+  [key: string]: any;
+}
 
-function FlexBoxForm() {
-  const classes = useStyles();
+interface IInputFieldProps extends IFieldBaseProps {}
+interface ISelectFieldProps extends IFieldBaseProps {
+  list: string[];
+}
+
+function Input(props: IInputFieldProps) {
+  const { label, id, ...rest } = props;
 
   return (
-    <>
+    <div className="field">
+      <label htmlFor={id}>{label}</label>
+      <input name={id} id={id} {...rest} />
+    </div>
+  );
+}
+
+function Select(props: ISelectFieldProps) {
+  const { label, id, list, ...rest } = props;
+
+  return (
+    <div className="field">
+      <label htmlFor={id}>{label}</label>
+      <select name={id} id={id} {...rest}>
+        {list.map((x: string, i: number) => (
+          <option key={`${id}-${i}`}>{x}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+function FlexBoxForm({ getFieldValues }: any) {
+  const formik = useFormik({
+    initialValues: {
+      maxWidth: "1024px",
+      alignSelf: "left",
+      alignContent: "center"
+    },
+    onSubmit: getFieldValues
+  });
+
+  return (
+    <form noValidate onChange={formik.handleSubmit} autoComplete="off">
       <h2 style={{ margin: "1rem", textAlign: "left" }}>Flex Box Form</h2>
-      <Box className={classes.formBox}>
-        <TextField id="maxWidth" name="maxWidth" label="max width" />
-        <FormControl className={classes.formControl}>
-          <InputLabel id="align-self">Align Self</InputLabel>
-          <Select labelId="align-self" id="align-self">
-            {["left", "right", "center"].map((x: string, i: number) => (
-              <MenuItem key={`mi-${i}`} value={x.toLowerCase()}>
-                {x}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="align-content">Align Content</InputLabel>
-          <Select labelId="align-content" id="align-content">
-            {["left", "right", "center", "around", "between", "even"].map(
-              (x: string, i: number) => (
-                <MenuItem key={`mia-${i}`} value={x.toLowerCase()}>
-                  {x}
-                </MenuItem>
-              )
-            )}
-          </Select>
-        </FormControl>
+      <Box className="form-fields-container">
+        <Input
+          label="Max Width"
+          id="maxWidth"
+          value={formik.values.maxWidth}
+          onChange={formik.handleChange}
+        />
+        <Select
+          label="Align Self"
+          id="alignSelf"
+          list={["left", "right", "center"]}
+          value={formik.values.alignSelf}
+          onChange={formik.handleChange}
+        />
+        <Select
+          label="Align Content"
+          id="alignContent"
+          list={["left", "right", "center", "around", "between", "even"]}
+          value={formik.values.alignContent}
+          onChange={formik.handleChange}
+        />
       </Box>
-    </>
+    </form>
   );
 }
 
