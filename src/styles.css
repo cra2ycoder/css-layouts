@@ -9,8 +9,8 @@ body {
 }
 
 .child {
+  width: 100px;
   height: 100px;
   background-color: red;
   margin: 1rem;
-  flex: 1;
 }
