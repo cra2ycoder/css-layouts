@@ -1,4 +1,14 @@
-import { IAlignSelfProps, IAlignContentProps } from "./layouts/typings";
+import {
+  IAlignSelfProps,
+  IAlignContentProps,
+  ISizeProps,
+  ICSSUnit
+} from "./layouts/typings";
+
+const getValue = (value: string = "", unit: ICSSUnit = "px") => {
+  const input = value?.replace(/\s\s+/g, "")?.trim();
+  return input !== "" && input !== "x" ? input : undefined;
+};
 
 const parseAlignSelf = (value?: IAlignSelfProps) => {
   const input = value || {};
@@ -39,8 +49,34 @@ const parseAlignContent = (value: IAlignContentProps) => {
   return output;
 };
 
-const parseSizes = (value: string) => {
-  return;
+const splitSizeValues = (value: string) => {
+  // `wt|minWt|maxWt & ht|minHt|maxHt`;
+
+  const [wt, ht] = value.split("&");
+  const [width = "x", minWidth = "x", maxWidth = "x"] = wt.split("|");
+  const [height = "x", minHeight = "x", maxHeight = "x"] = ht.split("|");
+
+  return {
+    width: getValue(width),
+    height: getValue(height),
+    "min-width": getValue(minWidth),
+    "max-width": getValue(maxWidth),
+    "min-height": getValue(minHeight),
+    "max-height": getValue(maxHeight)
+  };
+};
+
+const parseSizes = (value: ISizeProps) => {
+  const input = value || {};
+
+  const output: IAlignContentProps = {};
+
+  Object.keys(input)?.forEach((key: string, index: number) => {
+    let val = input[key];
+    output[key] = splitSizeValues(val);
+  });
+
+  return output;
 };
 
 const parseInnerSpace = (value: string) => {

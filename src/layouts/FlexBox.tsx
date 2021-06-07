@@ -27,7 +27,11 @@ function Wrapper(props: IWrapperProps) {
     xxl: "center"
   });
 
-  console.log({ alignSelf, alignContent });
+  const sizes = parseSizes({
+    sm: "x|100|200 & x|100%|3rem"
+  });
+
+  console.log({ alignSelf, alignContent, sizes });
 
   // const {
   //   className = "",

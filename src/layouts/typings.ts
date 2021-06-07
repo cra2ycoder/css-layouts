@@ -42,6 +42,8 @@ export interface IScreenProps {
   xxl?: string;
 }
 
+export type ICSSUnit = "px" | "rem" | "em" | "%";
+
 /**
  * @description
  * `minWt|maxWt & minHt|maxHt`
