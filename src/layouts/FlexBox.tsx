@@ -31,7 +31,21 @@ function Wrapper(props: IWrapperProps) {
     sm: "x|100|200 & x|100%|3rem"
   });
 
-  console.log({ alignSelf, alignContent, sizes });
+  const innerSpaces = parseInnerSpace({
+    sm: "*-10|4",
+    lg: "1|2|3|4",
+    md: "x|9|x|2",
+    xl: "*-100px|2rem"
+  });
+
+  const outerSpaces = parseInnerSpace({
+    sm: "*-10|4",
+    lg: "1|2|3|4",
+    md: "x|9|x|2",
+    xl: "*-100px|2rem"
+  });
+
+  console.log({ alignSelf, alignContent, sizes, innerSpaces, outerSpaces });
 
   // const {
   //   className = "",
