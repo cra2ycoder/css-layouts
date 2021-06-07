@@ -12,16 +12,17 @@ export default function App() {
 
   return (
     <div className="App">
-      <FlexBoxForm
+      {/* <FlexBoxForm
         getFieldValues={(values: object) => {
           console.log({ values });
           setWrapperStyle({ ...values });
         }}
-      />
+      /> */}
       <Wrapper
-        alignSelf={wrapperStyle?.alignSelf}
-        alignContent={wrapperStyle?.alignContent}
-        maxWidth={wrapperStyle?.maxWidth}
+        alignSelf={{}}
+        // alignSelf={wrapperStyle?.alignSelf}
+        // alignContent={wrapperStyle?.alignContent}
+        // maxWidth={wrapperStyle?.maxWidth}
       >
         <Panel className="child">Box</Panel>
         <Panel className="child">Box</Panel>
