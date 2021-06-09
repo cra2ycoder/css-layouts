@@ -3,8 +3,17 @@ import {
   IAlignContentProps,
   ISizeProps,
   ISpaceProps,
-  ICSSUnit
+  ICSSUnit,
+  IScreenList
 } from "./layouts/typings";
+
+const RESPONSIVE_BREAK_POINTS = {
+  xs: 0,
+  sm: 600,
+  md: 960,
+  lg: 1280,
+  xl: 1920
+};
 
 const getValue = (value: string = "", unit: ICSSUnit = "px") => {
   const input = value?.replace(/\s\s+/g, "")?.trim();
@@ -12,27 +21,20 @@ const getValue = (value: string = "", unit: ICSSUnit = "px") => {
 };
 
 const getTRBL = (prop: string, values: object, isGroup: boolean) => {
-  const mapProps = {
-    t: `${prop}-top`,
-    r: `${prop}-right`,
-    b: `${prop}-bottom`,
-    l: `${prop}-left`
-  };
-
   const res = Object.values(values).join(" ");
 
   if (isGroup === true) {
-    return {
-      [prop]: res.replace(/x/g, "").trim()
-    };
+    return `
+      ${prop}: ${res.replace(/x/g, "").trim()};
+    `.trim();
   } else {
     const [t, r, b, l] = res.split(" ");
-    return {
-      [mapProps.t]: getValue(t),
-      [mapProps.r]: getValue(r),
-      [mapProps.b]: getValue(b),
-      [mapProps.l]: getValue(l)
-    };
+    return `
+      ${prop}-top: ${getValue(t)};
+      ${prop}-right: ${getValue(r)};
+      ${prop}-bottom: ${getValue(b)};
+      ${prop}-left: ${getValue(l)};
+    `.trim();
   }
 };
 
@@ -43,14 +45,14 @@ const splitSizeValues = (value: string) => {
   const [width = "x", minWidth = "x", maxWidth = "x"] = wt.split("|");
   const [height = "x", minHeight = "x", maxHeight = "x"] = ht.split("|");
 
-  return {
-    width: getValue(width),
-    height: getValue(height),
-    "min-width": getValue(minWidth),
-    "max-width": getValue(maxWidth),
-    "min-height": getValue(minHeight),
-    "max-height": getValue(maxHeight)
-  };
+  return `
+    width: ${getValue(width)};
+    height: ${getValue(height)};
+    "min-width": ${getValue(minWidth)};
+    "max-width": ${getValue(maxWidth)};
+    "min-height": ${getValue(minHeight)};
+    "max-height": ${getValue(maxHeight)};
+  `.trim();
 };
 
 const splitSpaceValues = (input: string, property: string) => {
@@ -131,7 +133,7 @@ const parseInnerSpace = (value: ISpaceProps) => {
   return output;
 };
 
-const parseOuterSpace = (value: string) => {
+const parseOuterSpace = (value: ISpaceProps) => {
   const input = value || {};
   const output: IAlignContentProps = {};
 
@@ -152,10 +154,25 @@ const parsePosition = (value: string) => {
 };
 
 const combineStyles = (value: any) => {
+  console.log({ value });
+
+  const styles = {};
+
+  for (const [key, css] of Object.entries(value)) {
+    for (const prop in IScreenList) {
+      // console.log({ prop });
+      styles[prop] = css[prop];
+    }
+    // console.log({ key, css });
+  }
+
+  console.log({ styles });
+
   return {};
 };
 
 export {
+  RESPONSIVE_BREAK_POINTS,
   parseAlignSelf,
   parseAlignContent,
   parseSizes,

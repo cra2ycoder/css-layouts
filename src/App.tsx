@@ -1,14 +1,14 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Wrapper, Container, Panel } from "./layouts";
-import { FlexBoxForm } from "./form";
+// import { FlexBoxForm } from "./form";
 import "./styles.css";
 
 export default function App() {
-  const [wrapperStyle, setWrapperStyle] = useState<object>({
-    alignContent: "center",
-    alignSelf: "left",
-    maxWidth: "1024px"
-  });
+  // const [wrapperStyle, setWrapperStyle] = useState<object>({
+  //   alignContent: "center",
+  //   alignSelf: "left",
+  //   maxWidth: "1024px"
+  // });
 
   return (
     <div className="App">

@@ -4,8 +4,9 @@ import {
   parseAlignSelf,
   parseAlignContent,
   parseSizes,
-  parseInnerSpace
-  // parseOuterSpace,
+  parseInnerSpace,
+  parseOuterSpace,
+  combineStyles
   // parseBackground,
   // parsePosition
 } from "../utils";
@@ -38,14 +39,16 @@ function Wrapper(props: IWrapperProps) {
     xl: "*-100px|2rem"
   });
 
-  const outerSpaces = parseInnerSpace({
+  const outerSpaces = parseOuterSpace({
     sm: "*-10|4",
     lg: "1|2|3|4",
     md: "x|9|x|2",
     xl: "*-100px|2rem"
   });
 
-  console.log({ alignSelf, alignContent, sizes, innerSpaces, outerSpaces });
+  // console.log({ alignSelf, alignContent, sizes, innerSpaces, outerSpaces });
+
+  combineStyles({ alignSelf, alignContent, sizes, innerSpaces, outerSpaces });
 
   // const {
   //   className = "",
