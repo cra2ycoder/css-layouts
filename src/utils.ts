@@ -8,11 +8,12 @@ import {
 } from "./layouts/typings";
 
 const RESPONSIVE_BREAK_POINTS = {
-  xs: 0,
-  sm: 600,
+  xs: 320,
+  sm: 640,
   md: 960,
-  lg: 1280,
-  xl: 1920
+  lg: 1024,
+  xl: 1280,
+  xxl: 1536
 };
 
 const getValue = (value: string = "", unit: ICSSUnit = "px") => {
@@ -154,16 +155,18 @@ const parsePosition = (value: string) => {
 };
 
 const combineStyles = (value: any) => {
-  console.log({ value });
+  let styles: string = ``;
 
-  const styles = {};
-
-  for (const [key, css] of Object.entries(value)) {
-    for (const prop in IScreenList) {
-      // console.log({ prop });
-      styles[prop] = css[prop];
+  for (const prop in IScreenList) {
+    let cssprops = ``;
+    for (const [key, css] of Object.entries(value)) {
+      cssprops += css[prop] + "\n";
     }
-    // console.log({ key, css });
+
+    styles += `
+    \n\n@media(min-width: ${RESPONSIVE_BREAK_POINTS[prop]}px) {
+      ${cssprops}
+    }`.trim();
   }
 
   console.log({ styles });
