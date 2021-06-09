@@ -14,35 +14,30 @@ export type TAlignContentTypes =
   | "between";
 
 export type TAlignTypes = "left" | "center" | "right";
-
-export interface IAlignSelfProps {
-  xs?: TAlignTypes;
-  sm?: TAlignTypes;
-  md?: TAlignTypes;
-  lg?: TAlignTypes;
-  xl?: TAlignTypes;
-  xxl?: TAlignTypes;
-}
-
-export interface IAlignContentProps {
-  xs?: TAlignContentTypes;
-  sm?: TAlignContentTypes;
-  md?: TAlignContentTypes;
-  lg?: TAlignContentTypes;
-  xl?: TAlignContentTypes;
-  xxl?: TAlignContentTypes;
-}
-
-export interface IScreenProps {
-  xs?: string;
-  sm?: string;
-  md?: string;
-  lg?: string;
-  xl?: string;
-  xxl?: string;
-}
-
 export type ICSSUnit = "px" | "rem" | "em" | "%";
+
+export enum IScreenList {
+  xs = "xs",
+  sm = "sm",
+  md = "md",
+  lg = "lg",
+  xl = "xl",
+  xxl = "xxl"
+}
+
+export type IScreenProps = {
+  [key in IScreenList]?: string | undefined;
+};
+
+// export type IScreenKeys = keyof typeof IScreenList;
+
+export type IAlignSelfProps = {
+  [key in IScreenList]?: TAlignTypes;
+};
+
+export type IAlignContentProps = {
+  [key in IScreenList]?: TAlignContentTypes;
+};
 
 /**
  * @description

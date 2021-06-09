@@ -4,10 +4,10 @@ import {
   parseAlignSelf,
   parseAlignContent,
   parseSizes,
-  parseInnerSpace,
-  parseOuterSpace,
-  parseBackground,
-  parsePosition
+  parseInnerSpace
+  // parseOuterSpace,
+  // parseBackground,
+  // parsePosition
 } from "../utils";
 import { IWrapperProps, IContainerProps, IPanelProps } from "./typings";
 import "./styles.css";

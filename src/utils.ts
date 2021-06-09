@@ -55,9 +55,9 @@ const splitSizeValues = (value: string) => {
 
 const splitSpaceValues = (input: string, property: string) => {
   // sm: "*-10|4",
-  //   lg: "1|2|3|4",
-  //   md: "x|9|x|2",
-  //   xl: "*-100px|2rem"
+  // lg: "1|2|3|4",
+  // md: "x|9|x|2",
+  // xl: "*-100px|2rem"
 
   const [isGroup = "", values = ""] = input.includes("*")
     ? input.split("-")
@@ -69,7 +69,7 @@ const splitSpaceValues = (input: string, property: string) => {
 };
 
 const parseAlignSelf = (value?: IAlignSelfProps) => {
-  const input = value || {};
+  const input: IAlignSelfProps = value || {};
 
   const output: IAlignSelfProps = {};
 
