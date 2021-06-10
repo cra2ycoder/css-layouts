@@ -1,4 +1,5 @@
 import { Box } from "@material-ui/core";
+import styled from "styled-components";
 import clsx from "clsx";
 import {
   parseAlignSelf,
@@ -12,6 +13,11 @@ import {
 } from "../utils";
 import { IWrapperProps, IContainerProps, IPanelProps } from "./typings";
 import "./styles.css";
+
+const StyledBox = styled.div((props) => {
+  // console.log(props.styles);
+  return props.styles;
+});
 
 function Wrapper(props: IWrapperProps) {
   const alignSelf = parseAlignSelf({
@@ -48,8 +54,6 @@ function Wrapper(props: IWrapperProps) {
 
   // console.log({ alignSelf, alignContent, sizes, innerSpaces, outerSpaces });
 
-  combineStyles({ alignSelf, alignContent, sizes, innerSpaces, outerSpaces });
-
   // const {
   //   className = "",
   //   alignContent = "left",
@@ -76,7 +80,17 @@ function Wrapper(props: IWrapperProps) {
   //   justifyContent: mapAlign[alignContent] || alignContent
   // };
 
-  return <Box>{props?.children}</Box>;
+  const stylesString = combineStyles({
+    alignSelf,
+    alignContent,
+    sizes,
+    innerSpaces,
+    outerSpaces
+  });
+
+  return <StyledBox styles={stylesString}>{props?.children}</StyledBox>;
+
+  // return <Box>{props?.children}</Box>;
   // return <Box {...enhancedProps}>{children}</Box>;
 }
 

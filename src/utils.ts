@@ -16,9 +16,14 @@ const RESPONSIVE_BREAK_POINTS = {
   xxl: 1536
 };
 
+const CSS_UNITS = ["px", "rem", "em", "%"];
+
 const getValue = (value: string = "", unit: ICSSUnit = "px") => {
   const input = value?.replace(/\s\s+/g, "")?.trim();
-  return input !== "" && input !== "x" ? input : undefined;
+  const cssUnit = input?.match(/\D+/g) || ["x"];
+  const result = input !== "" && input !== "x" ? input : undefined;
+  // console.log({ cssUnit, input, result });
+  return cssUnit[0] === "x" && result ? result + unit : result;
 };
 
 const getTRBL = (prop: string, values: object, isGroup: boolean) => {
@@ -30,12 +35,19 @@ const getTRBL = (prop: string, values: object, isGroup: boolean) => {
     `.trim();
   } else {
     const [t, r, b, l] = res.split(" ");
-    return `
-      ${prop}-top: ${getValue(t)};
-      ${prop}-right: ${getValue(r)};
-      ${prop}-bottom: ${getValue(b)};
-      ${prop}-left: ${getValue(l)};
-    `.trim();
+    const top = getValue(t),
+      right = getValue(r),
+      bottom = getValue(b),
+      left = getValue(l);
+
+    console.log({ top, right, bottom, left });
+
+    // return `
+    // ${top} ? ${prop}-top: ${top}: '';
+    //   ${prop}-right: '';
+    //   ${prop}-bottom: '';
+    //   ${prop}-left: '';
+    // `.trim();
   }
 };
 
@@ -49,10 +61,10 @@ const splitSizeValues = (value: string) => {
   return `
     width: ${getValue(width)};
     height: ${getValue(height)};
-    "min-width": ${getValue(minWidth)};
-    "max-width": ${getValue(maxWidth)};
-    "min-height": ${getValue(minHeight)};
-    "max-height": ${getValue(maxHeight)};
+    min-width: ${getValue(minWidth)};
+    max-width: ${getValue(maxWidth)};
+    min-height: ${getValue(minHeight)};
+    max-height: ${getValue(maxHeight)};
   `.trim();
 };
 
@@ -104,7 +116,9 @@ const parseAlignContent = (value: IAlignContentProps) => {
 
   Object.keys(input)?.forEach((key: string) => {
     let val = input[key];
-    output[key] = `justify-content: ${mapProps[val]};`;
+    if (val) {
+      output[key] = `justify-content: ${mapProps[val]};`;
+    }
   });
 
   return output;
@@ -128,7 +142,9 @@ const parseInnerSpace = (value: ISpaceProps) => {
 
   Object.keys(input)?.forEach((key: string) => {
     let val = input[key];
-    output[key] = splitSpaceValues(val, "padding");
+    if (val) {
+      output[key] = splitSpaceValues(val, "padding");
+    }
   });
 
   return output;
@@ -140,7 +156,9 @@ const parseOuterSpace = (value: ISpaceProps) => {
 
   Object.keys(input)?.forEach((key: string) => {
     let val = input[key];
-    output[key] = splitSpaceValues(val, "margin");
+    if (val) {
+      output[key] = splitSpaceValues(val, "margin");
+    }
   });
 
   return output;
@@ -160,18 +178,21 @@ const combineStyles = (value: any) => {
   for (const prop in IScreenList) {
     let cssprops = ``;
     for (const [key, css] of Object.entries(value)) {
-      cssprops += css[prop] + "\n";
+      // console.log(css[prop]);
+      const val = css[prop];
+      if (val) {
+        cssprops += css[prop] + "\n";
+      }
     }
 
-    styles += `
-    \n\n@media(min-width: ${RESPONSIVE_BREAK_POINTS[prop]}px) {
+    styles += `@media(min-width: ${RESPONSIVE_BREAK_POINTS[prop]}px) {
       ${cssprops}
-    }`.trim();
+    }\n`;
   }
 
   console.log({ styles });
 
-  return {};
+  return styles;
 };
 
 export {
