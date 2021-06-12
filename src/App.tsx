@@ -1,7 +1,7 @@
 // import { useState } from "react";
-import { Wrapper, Container, Panel } from "./layouts";
+// import { Wrapper, Container, Panel } from "./layouts";
 // import { FlexBoxForm } from "./form";
-import "./styles.css";
+// import "./styles.css";
 
 export default function App() {
   // const [wrapperStyle, setWrapperStyle] = useState<object>({
@@ -18,7 +18,7 @@ export default function App() {
           setWrapperStyle({ ...values });
         }}
       /> */}
-      <Wrapper
+      {/* <Wrapper
         alignSelf={{}}
         // alignSelf={wrapperStyle?.alignSelf}
         // alignContent={wrapperStyle?.alignContent}
@@ -33,7 +33,7 @@ export default function App() {
         <Panel className="child">Box</Panel>
         <Panel className="child">Box</Panel>
         <Panel className="child">Box</Panel>
-      </Wrapper>
+      </Wrapper> */}
     </div>
   );
 }
