@@ -25,47 +25,49 @@
 
 ```jsx
 // primitive
-<Element.Wrapper />
-<Element.Container />
-<Element.Box /> or <Element.Panel /> => default
+<Element.Wrapper /> => enableContainer => <Element.Container />
+<Element.Box /> => default
 <Element.FluidBox /> => no fixed width
-<Element.FixedBox /> => modal, popup, overlay, toast
+<Element.FixedBox /> =>
 <Element.AbsBox />
 <Element.Mask /> => type: page/box (immediate parent)
 
 // specific
-<Element.Header />
-<Element.Footer />
-<Element.Nav />
-<Element.SideBar /> => pancake
+<Layout.Header />
+<Layout.Footer />
+<Layout.NavBar />
+<Layout.SideBar /> => pancake
+<Layout.Card />
+<Layout.Modal /> => modal, popup, overlay, toast
 
-<Element.Grid>
-  <Element.GridItem />
-  <Element.GridItem />
-</Element.Grid>
+<Layout.Grid>
+  <Element.FluidBox />
+  <Element.FluidBox />
+  ...
+</Layout.Grid>
 
-<Element.FlexBox>
-  <Element.FlexBoxItem />
-  <Element.FlexBoxItem />
-  <Element.FlexBoxItem />
-</Element.FlexBox>
+<Layout.FlexBox>
+  <Element.FluidBox />
+  <Element.FluidBox />
+  ...
+</Layout.FlexBox>
 ```
 
 - typography
 
 ```jsx
-<Text.Heading />
-<Text.Paragraph />
+<Text.Heading /> => h1 - h6
+<Text.Paragraph /> => p
 <Text.Plain /> => div/span
-<Text.Link /> => <a />
-<Text.Button /> => <div role="button" />
-<Text.FieldLabel /> => specifically for forms
+<Text.Link /> => a
+<Text.Button /> => div role="button"
+<Text.Label /> => label
 ```
 
 - icons
 
 ```jsx
-<Icon size="large/small/default" />
+<Icon width={24} height={24} />
 ```
 
 - images
@@ -73,6 +75,14 @@
 ```jsx
 <Image.Banner />
 <Image.Logo />
-<Image.Card />
+<Image.Box />
 <Image.Thumbnail />
+```
+
+- shapes
+
+```jsx
+<Shape.Circle radius={100} />
+<Shape.Rectangle width={100} height={200} />
+<Shape.Square size={100} />
 ```
