@@ -65,5 +65,14 @@
 - icons
 
 ```jsx
-<Icon
+<Icon size="large/small/default" />
+```
+
+- images
+
+```jsx
+<Image.Banner />
+<Image.Logo />
+<Image.Card />
+<Image.Thumbnail />
 ```
