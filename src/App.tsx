@@ -1,7 +1,9 @@
 // import { useState } from "react";
 // import { Wrapper, Container, Panel } from "./layouts";
 // import { FlexBoxForm } from "./form";
-// import "./styles.css";
+import "./styles.css";
+
+import { Heading } from "./layouts";
 
 export default function App() {
   // const [wrapperStyle, setWrapperStyle] = useState<object>({
@@ -12,6 +14,8 @@ export default function App() {
 
   return (
     <div className="App">
+      <Heading text="Heading" type="h1" />
+
       {/* <FlexBoxForm
         getFieldValues={(values: object) => {
           console.log({ values });
